@@ -11,4 +11,8 @@ and it has the added benefit of possibly helping others
 
 Please feel free to add constructive input as this is my first Github project.
 
+Shameless plug:
+    If you find this code useful and are feeling in a generous mood then feel free to send me tip to my PayPal account
+    vanth9924@4gmail.com - just remove the 4s
+    I like to send out tips when I find something useful, and wanted to give others the same opportunity.
 Troy
