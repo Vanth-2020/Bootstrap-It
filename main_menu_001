@@ -1,5 +1,6 @@
 # Utilizes Python and the ttkbootstrap module to create a GUI interface that I use to test code
 # This GUI also utilizes a number of widgets in ttkbootstrap for your familiarity
+# I have not added all functionality yet, though I am almost finished - 11 Jan 2024
 
 import ttkbootstrap as tkb
 from ttkbootstrap.constants import *
@@ -12,3 +13,206 @@ from tkinter.filedialog import askdirectory
 from ttkbootstrap.tooltip import ToolTip
 from pathlib import Path
 
+# Sets the 'Global Variable' for the path to the assets folder
+# The path is a sub-folder /assets of the folder where this .py file is located
+# Add your own graphic file(s) to this folder to reference them in the program
+PATH = Path(__file__).parent / 'assets'
+
+# This class contains the tkinterBootstrap frame for the displayed window (buttons, boxes, etc)
+class MenuProgram(tkb.Frame):
+
+    def __init__(self, master_window):
+        super().__init__(master_window, padding=(10, 10))
+        self.pack(fill=BOTH, expand=YES)
+        self.colors = master_window.style.colors
+        self.filename = tkb.StringVar()
+        
+        self.images = [
+            tkb.PhotoImage(
+                name='logo',
+                file=PATH / 'pylogo_48px.png')
+                ]
+        
+        self.create_top_buttons()
+        self.create_textbox()
+        self.create_buttonbox()
+
+    # Creates the containers for the logo, two buttons and the text box
+    def create_top_buttons(self):
+        
+        logo_container = tkb.Frame(self, padding=10, bootstyle=SECONDARY)
+        logo_container.pack(fill=X, pady=5)
+        text_frame = tkb.Frame(self)
+        text_frame.pack(fill=X, pady=5)
+        container = tkb.Frame(self)
+        container.pack(fill=X, pady=5)
+        
+        hdr_label = tkb.Label(
+            master=logo_container,
+            image='logo',
+            bootstyle=(INVERSE, SECONDARY))
+        hdr_label.pack(side=LEFT)
+        
+        logo_text = tkb.Label(
+            master=logo_container,
+            text="Click the appropriate button to perform an action. I use this program to test my code.",
+            font=('TkDefaultFixed', 16),
+            bootstyle=(INVERSE, SECONDARY))
+        logo_text.pack(side=LEFT, padx=10)
+        
+        b1 = tkb.Button(
+            master=container, 
+            text="Test Code 1", 
+            width=19,
+            command=self.b1_click)
+        b1.pack(side=LEFT, padx=5)
+        ToolTip(b1, text='''insert your text here''', bootstyle=(SUCCESS))
+
+        b1_lbl = tkb.Label(
+            master=container, 
+            # font=('Aptos Display', 10),
+            font=('Segoe UI', 12),
+            text="hover mouse over button for text tip",
+            width=40,
+            foreground="yellow",
+            )
+        b1_lbl.pack(side=LEFT, fill=X, padx=5)
+
+        b2 = tkb.Button(
+            master=container, 
+            text="Test Code 2", 
+            width=19,
+            command=self.b2_click
+            )
+        b2.pack(side=LEFT, padx=5)
+        ToolTip(b2, text='''
+insert your text here
+''', bootstyle=(SUCCESS))
+
+        b2_lbl = tkb.Label(
+            master=container, 
+            # font=('Aptos Display', 10),
+            font=('Segoe UI', 12),
+            text="hover mouse over button for text tip",
+            width=40,
+            foreground="yellow",
+            )
+        b2_lbl.pack(side=LEFT, fill=X, padx=5)
+
+    # Create text box for viewing status and other stuff
+    def create_textbox(self):
+        """Create and add the widget elements"""
+        style = tkb.Style()
+
+        # Create the label
+        label = tkb.Label(self, 
+                          text="Code completion window:",
+                          anchor="w",
+                          font=("Segoe UI", 20),
+                          justify="left",
+                          foreground="#00FEA4"
+        )
+        label.pack(fill="x", pady=(20, 0))
+
+        self.textbox = ScrolledText(
+            master=self,
+            height=40,
+            font=('Segoe UI', 10,),
+            highlightcolor=style.colors.primary,
+            highlightbackground=style.colors.border,
+            highlightthickness=10,
+            wrap=WORD
+        )
+        self.textbox.pack(fill=BOTH, pady=5)
+
+        default_txt = ">> Good morning < insert your name here>! I can tell you are feeling great today =)\n"
+        default_txt1 = ">> IDEAS TO WORK ON :\n"
+        default_txt2 = "***  Code that does XYZ  ***\n"
+        default_txt3 = "***  More code that does XYZ  ***\n"
+        default_txt4 = "=" * 90 + "\n"
+        
+        self.textbox.insert(END, default_txt)
+        self.textbox.insert(END, default_txt1)
+        self.textbox.insert(END, default_txt2)
+        self.textbox.insert(END, default_txt3)
+        self.textbox.insert(END, default_txt4)
+
+        file_entry = tkb.Entry(self, 
+                               textvariable=self.filename, 
+                               bootstyle="warning")
+        file_entry.pack(side=LEFT, fill=X, expand=YES, padx=(0, 5))
+
+        browse_btn = tkb.Button(self, 
+                                text="Select text file to 'OPEN'", 
+                                command=self.open_file)
+        browse_btn.pack(side=LEFT, fill=X, padx=(5, 0))
+        ToolTip(browse_btn, text='''Opens a .txt file
+and displays the contents
+in the above code box.
+''', bootstyle=(SUCCESS))
+
+    # Opens a text file and displays the contents in the ScrolledText Widget window
+    def open_file(self):
+        path = askopenfilename()
+        if not path:
+            return
+
+        with open(path, encoding='utf-8') as f:
+            self.textbox.delete('1.0', END)
+            self.textbox.insert(END, f.read())
+            self.filename.set(path)
+
+    # Create buttons the Exit Program button
+    def create_buttonbox(self):
+        button_container = tkb.Frame(self)
+        button_container.pack(fill=X, expand=YES, padx=20)
+
+        cancel_btn = tkb.Button(
+            master=button_container,
+            text="Exit Program",
+            command=self.on_cancel,
+            # bootstyle=INFO,
+            width=12
+        )
+        cancel_btn.pack(side=RIGHT, padx=5, pady=5)
+        ToolTip(cancel_btn, text='''
+Exits the
+program''', bootstyle=(SUCCESS))
+
+    # describe your function <<Currently, it opens the file browser to select a folder>>
+    def b1_click(self):
+        '''what does this function do?'''
+        r_path = askdirectory()
+        self.filename.set(r_path)
+        message = f"""
+>>  Use this to identify your codes progress
+==================================================================
+"""
+        self.textbox.insert(END, message)
+        self.textbox.insert(END,f"I selected the: {r_path} folder\n")
+
+        toast = ToastNotification(
+            title="ttkbootstrap toast message",
+            message="You selected a folder",
+            duration=3000,)
+        toast.show_toast()
+ 
+    def b2_click(self):
+        '''what does this function do?'''
+        toast = ToastNotification(
+            title="ttkbootstrap toast message",
+            message="You clicked the 'Code Test 2' button",
+            duration=3000,)
+        toast.show_toast()
+ 
+    # Ends the program when user clicks the cancel button 
+    def on_cancel(self):
+        '''Cancel and close the application'''
+        self.quit()
+
+# Initializes the MenuProgram Class, sets the Window Name, Bootstrap Style and Window Resize Option to FALSE
+if __name__ == '__main__':
+    app = tkb.Window("Menu Program", "superhero", resizable=(FALSE, FALSE))
+    app.geometry("1920x1080")  # Set the window size to 1920x1080
+    MenuProgram(app)
+    app.mainloop()
