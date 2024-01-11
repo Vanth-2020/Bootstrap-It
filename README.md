@@ -1,5 +1,5 @@
 # Python Bootstrap tkinter GUI
-Creates a GUI window with Python utilizing ttkbootstrap. I use it to test code that interacts with the Windows file system.
+Creates a GUI window with Python utilizing tkinter and ttkbootstrap. I use it to test code that interacts with the Windows file system.
 You make the changes required to make the buttons do some task or add other functionality.
 
 Code is not fully fleshed out as I need to add a:
