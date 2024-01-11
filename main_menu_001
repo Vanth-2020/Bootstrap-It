@@ -1,7 +1,3 @@
-# Utilizes Python and the ttkbootstrap module to create a GUI interface that I use to test code
-# This GUI also utilizes a number of widgets in ttkbootstrap for your familiarity
-# I have not added all functionality yet, though I am almost finished - 11 Jan 2024
-
 import ttkbootstrap as tkb
 from ttkbootstrap.constants import *
 from ttkbootstrap.toast import ToastNotification
@@ -129,8 +125,7 @@ insert your text here
         default_txt1 = ">> IDEAS TO WORK ON :\n"
         default_txt2 = "***  Code that does XYZ  ***\n"
         default_txt3 = "***  More code that does XYZ  ***\n"
-        default_txt4 = "=" * 90 + "\n"
-        
+        default_txt4 = "<<"       
         self.textbox.insert(END, default_txt)
         self.textbox.insert(END, default_txt1)
         self.textbox.insert(END, default_txt2)
@@ -160,7 +155,8 @@ in the above code box.
 
         with open(path, encoding='utf-8') as f:
             self.textbox.delete('1.0', END)
-            self.textbox.insert(END, f.read())
+            self.textbox.insert(END, f.read() + "\n")
+            self.textbox.insert(END, f"<<")
             self.filename.set(path)
 
     # Create buttons the Exit Program button
@@ -184,34 +180,35 @@ program''', bootstyle=(SUCCESS))
         '''what does this function do?'''
         r_path = askdirectory()
         if not r_path:
-            self.textbox.insert(END, "No file or folder selected <Try Again>\n")
+            self.textbox.insert(END, f"<<\n")
+            self.textbox.insert(END, f"No file or folder selected <Try Again>\n")
         else:
             
             self.filename.set(r_path)
             message = f"""
-==========================================================================================
+<<
 """
             self.textbox.insert(END, message)
-            self.textbox.insert(END,f"I selected the: {r_path} folder\n")
+            self.textbox.insert(END,f"Folder selected:  {r_path} folder\n")
 
-            toast = ToastNotification(
-                title="ttkbootstrap toast message",
-                message="You selected a folder",
-                duration=3000,)
+            toast = ToastNotification(title="toast message",
+                message="You selected a folder", duration=3000)
             toast.show_toast()
  
     def b2_click(self):
         '''what does this function do?'''
         toast = ToastNotification(
-            title="ttkbootstrap toast message",
+            title="toast message",
             message="You clicked the 'Code Test 2' button",
-            duration=3000,)
+            alert=True,
+            duration=3000
+            )
         toast.show_toast()
  
         message = f"""
-==========================================================================================
->>  You clicked the 'Code Test 2' button!
-"""
+<<
+>>  You clicked the 'Code Test 2' button!"""
+
         self.textbox.insert(END, message)
  
     # Ends the program when user clicks the cancel button 
