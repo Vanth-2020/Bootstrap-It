@@ -1,4 +1,4 @@
-# Bootstrap-It
+# Python Bootstrap-It GUI
 Creates a GUI window with Python utilizing ttkbootstrap. I use it to test code that interacts with the Windows file system.
 You make the changes required to make the buttons do some task or add other functionality.
 
