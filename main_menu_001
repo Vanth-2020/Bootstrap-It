@@ -37,7 +37,7 @@ class MenuProgram(tkb.Frame):
         self.create_textbox()
         self.create_buttonbox()
 
-    # Creates the containers for the logo, two buttons and the text box
+    # Creates the containers for the logo, two buttons and the text box etc.
     def create_top_buttons(self):
         
         logo_container = tkb.Frame(self, padding=10, bootstyle=SECONDARY)
