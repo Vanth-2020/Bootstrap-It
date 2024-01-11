@@ -37,7 +37,7 @@ class MenuProgram(tkb.Frame):
         self.create_textbox()
         self.create_buttonbox()
 
-    # Creates the containers for the logo, two buttons and the text box etc.
+    # Creates the containers for the logo, two buttons and the text box
     def create_top_buttons(self):
         
         logo_container = tkb.Frame(self, padding=10, bootstyle=SECONDARY)
@@ -155,6 +155,7 @@ in the above code box.
     def open_file(self):
         path = askopenfilename()
         if not path:
+            self.textbox.insert(END, "No file or folder selected\n")
             return
 
         with open(path, encoding='utf-8') as f:
@@ -171,7 +172,6 @@ in the above code box.
             master=button_container,
             text="Exit Program",
             command=self.on_cancel,
-            # bootstyle=INFO,
             width=12
         )
         cancel_btn.pack(side=RIGHT, padx=5, pady=5)
@@ -183,19 +183,22 @@ program''', bootstyle=(SUCCESS))
     def b1_click(self):
         '''what does this function do?'''
         r_path = askdirectory()
-        self.filename.set(r_path)
-        message = f"""
->>  Use this to identify your codes progress
-==================================================================
+        if not r_path:
+            self.textbox.insert(END, "No file or folder selected <Try Again>\n")
+        else:
+            
+            self.filename.set(r_path)
+            message = f"""
+==========================================================================================
 """
-        self.textbox.insert(END, message)
-        self.textbox.insert(END,f"I selected the: {r_path} folder\n")
+            self.textbox.insert(END, message)
+            self.textbox.insert(END,f"I selected the: {r_path} folder\n")
 
-        toast = ToastNotification(
-            title="ttkbootstrap toast message",
-            message="You selected a folder",
-            duration=3000,)
-        toast.show_toast()
+            toast = ToastNotification(
+                title="ttkbootstrap toast message",
+                message="You selected a folder",
+                duration=3000,)
+            toast.show_toast()
  
     def b2_click(self):
         '''what does this function do?'''
@@ -205,6 +208,12 @@ program''', bootstyle=(SUCCESS))
             duration=3000,)
         toast.show_toast()
  
+        message = f"""
+==========================================================================================
+>>  You clicked the 'Code Test 2' button!
+"""
+        self.textbox.insert(END, message)
+ 
     # Ends the program when user clicks the cancel button 
     def on_cancel(self):
         '''Cancel and close the application'''
@@ -213,6 +222,6 @@ program''', bootstyle=(SUCCESS))
 # Initializes the MenuProgram Class, sets the Window Name, Bootstrap Style and Window Resize Option to FALSE
 if __name__ == '__main__':
     app = tkb.Window("Menu Program", "superhero", resizable=(FALSE, FALSE))
-    app.geometry("1920x1080")  # Set the window size to 1920x1080
+    app.geometry("1920x1080")  # Set the window to a fixed size to 1920x1080
     MenuProgram(app)
     app.mainloop()
