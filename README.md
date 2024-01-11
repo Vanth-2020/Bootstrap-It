@@ -14,6 +14,6 @@ Please feel free to add constructive input as this is my first Github project.
 Shameless plug-
 If you find this code useful and are feeling in a generous mood then feel free to send me tip to my PayPal account.
 vanth992@gmail.com
-I like to send out tips when I find something useful, and want to give others the same feel good opportunity.
+I like to send out tips when I find something useful, and want to give others the same "feel good" opportunity.
     
 Troy
