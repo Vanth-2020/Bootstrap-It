@@ -2,8 +2,8 @@ import ttkbootstrap as tkb
 from ttkbootstrap.constants import *
 from ttkbootstrap.toast import ToastNotification
 from tkinter.scrolledtext import ScrolledText
-from ttkbootstrap.dialogs import Messagebox
-from ttkbootstrap.dialogs import QueryDialog
+from tkinter import messagebox
+# from ttkbootstrap.dialogs import QueryDialog
 from tkinter.filedialog import askopenfilename
 from tkinter.filedialog import askdirectory
 from ttkbootstrap.tooltip import ToolTip
@@ -204,13 +204,14 @@ program''', bootstyle=(SUCCESS))
             duration=3000
             )
         toast.show_toast()
- 
+        
         message = f"""
 <<
 >>  You clicked the 'Code Test 2' button!"""
-
         self.textbox.insert(END, message)
  
+        messagebox.showinfo("Information", "You clicked the 'Code Test 2' button")
+                 
     # Ends the program when user clicks the cancel button 
     def on_cancel(self):
         '''Cancel and close the application'''
