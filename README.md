@@ -7,6 +7,8 @@ I still need to add a:
 2)  QueryDialog
 
 I will add more functionality with ttkbootstrap as this file is meant for me to have a reference for the module
-and it has the added benefit of helping others
+and it has the added benefit of possibly helping others
+
+Please feel free to add constructive input as this is my first Github project.
 
 Troy
